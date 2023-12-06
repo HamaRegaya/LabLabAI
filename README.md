@@ -1,6 +1,6 @@
 
 <img src="https://i.imgur.com/U7VNIad.png" alt="Logo" width="200" align="right">
-
+# JOBEASE.AI
 Welcome to JOBEASE.AI, an AI-powered platform designed to assist users in crafting tailored resumes, evaluating CVs, and providing career guidance through a chatbot counselor.
 
 ## 🌐 Overview
