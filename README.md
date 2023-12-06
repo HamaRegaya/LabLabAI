@@ -1,5 +1,5 @@
 
-![Logo](https://i.imgur.com/gFhZHP4.png)
+![Logo](https://i.imgur.com/U7VNIad.png)
 
 # JOBEASE.AI
 
