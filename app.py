@@ -192,53 +192,6 @@ def get_info():
     
 @app.route("/")
 def home():
-    # # Question/answer relevance between overall question and answer.
-    # f_relevance = Feedback(openai.relevance).on_input_output()
-
-    # # Moderation metrics on output
-    # f_hate = Feedback(openai.moderation_hate).on_output()
-    # f_violent = Feedback(openai.moderation_violence, higher_is_better=False).on_output()
-    # f_selfharm = Feedback(openai.moderation_selfharm, higher_is_better=False).on_output()
-    # f_maliciousness = Feedback(openai.maliciousness_with_cot_reasons, higher_is_better=False).on_output()
-
-
-    # # TruLens Eval chain recorder
-    # chain_recorder = TruChain(
-    #     chain, app_id="contextual-chatbot", feedbacks=[f_relevance, f_hate, f_violent, f_selfharm, f_maliciousness]
-    # )
-
-
-    # # Streamlit frontend
-    # st.title("Contextual Chatbot")
-
-    # if "messages" not in st.session_state:
-    #     st.session_state.messages = []
-
-    # for message in st.session_state.messages:
-    #     with st.chat_message(message["role"]):
-    #         st.markdown(message["content"])
-
-    # if prompt := st.chat_input("What is up?"):
-    #     st.session_state.messages.append({"role": "user", "content": prompt})
-    #     with st.chat_message("user"):
-    #         st.markdown(prompt)
-
-    #     with st.chat_message("assistant"):
-    #         # Record with TruLens
-    #         with chain_recorder as recording:
-    #             full_response = chain.run(prompt)
-    #         message_placeholder = st.empty()
-    #         message_placeholder.markdown(full_response + "▌")
-    #         message_placeholder.markdown(full_response)
-    #     st.session_state.messages.append(
-    #         {"role": "assistant", "content": full_response})
-        
-    # tru.run_dashboard()
-#     response = model.predict(
-#     """write for me a story for kids""",
-#     **parameters
-# )
-#     print(response.text)
     return render_template("index_front.html")
 @app.route("/editprofile", methods=['GET', 'POST'])
 def editprofile():

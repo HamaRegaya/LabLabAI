@@ -5,3 +5,6 @@ vertexai
 trulens_eval
 langchain
 litellm 
+PyPDF2
+openai
+python-dotenv

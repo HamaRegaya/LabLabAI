@@ -1,7 +1,7 @@
 .venv
 .env
 .streamlit
-static/Front/assets/lablabai-406919-4d88ebc3542f.json
+./static/Front/assets/lablabai-406919-e0c47d25bf7d.json
 database.json
 database.sqlite
 default.sqlite
