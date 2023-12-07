@@ -40,7 +40,7 @@ class InfoUser:
         self.Organizations = ""
         self.Photo = ""
 tru = Tru()
-key_path = "primeval-gizmo-406722-d94f4e74be2e.json"
+key_path = "./static/Front/assets/lablabai-406919-e0c47d25bf7d.json"
 credentials = Credentials.from_service_account_file(key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
 
 if credentials.expired:
