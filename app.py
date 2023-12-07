@@ -190,7 +190,7 @@ def home():
 @app.route("/editprofile", methods=['GET', 'POST'])
 def editprofile():
     con = None  # Initialize con outside the try block
-    
+    info_user = InfoUser()
     if request.method == 'POST':
         try:
             
@@ -242,11 +242,16 @@ def editprofile():
 
                         # Insert the binary data into the database
                         cur.execute("""
-                            INSERT INTO info (user_id, phone_number, linkedin_profile, title, photo, address, skills, languages, profile, education, professional_experience, interests, certificates, organizations)
-                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                        """, (user_id, phone_number, linkedin_p, title, photo_binary, address, skills, languages, profile, education, professional_experience, interests, certificates, organizations))
+                            UPDATE info
+                            SET phone_number=?, linkedin_profile=?, title=?, photo=?, address=?, skills=?, languages=?, profile=?, education=?, professional_experience=?, interests=?, certificates=?, organizations=?
+                            WHERE user_id=?
+                        """, (phone_number, linkedin_p, title, photo_binary, address, skills, languages, profile, education, professional_experience, interests, certificates, organizations, user_id))
                        
                         con.commit()
+                        
+                        info_user=get_info()
+                        print(info_user.Title)
+                        print(info_user.Photo)
                         flash("Record Added Successfully", "success")
                 else:
                     flash("User not found", "danger")
@@ -260,9 +265,11 @@ def editprofile():
                 con.close()
 
                 # Redirect outside of the 'finally' block to ensure the connection is closed
-                return redirect("editprofile")
 
-    return render_template('editprofile.html')
+                return render_template('editprofile.html',info_user=info_user)
+
+    return render_template('editprofile.html',info_user=info_user)
+
 @app.route('/login',methods=["GET","POST"])
 def login():
     error_message = None  # Initialize error_message variable
@@ -295,6 +302,7 @@ def login():
 def register():
     if request.method == 'POST':
         try:
+            print("try")
             first_name = request.form['first_name']
             last_name = request.form['last_name']
             email = request.form['email']
@@ -302,13 +310,20 @@ def register():
 
             con = sqlite3.connect("database.sqlite")
             cur = con.cursor()
-
+            print("hhhhhhhhh")
             # Assuming you have an auto-incrementing primary key 'id'
             cur.execute("""
                 INSERT INTO user (First_name, Last_name, email, password)
                 VALUES (?, ?, ?, ?)
             """, (first_name, last_name, email, password))
-
+            print("baad cur")
+            user_id = cur.lastrowid
+            print(user_id)
+            cur.execute("""
+                INSERT INTO info (user_id)
+                VALUES (?)
+            """, (user_id,))
+            print("baad cur 2")
             con.commit()
             flash("Record Added Successfully", "success")
         except Exception as e:

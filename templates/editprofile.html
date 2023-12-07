@@ -188,65 +188,66 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label fs-5">Email address</label>
-                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="email" value="{{ session['email'] }}" aria-describedby="emailHelp">
+                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="email" value="{{ session['email'] }}" aria-describedby="emailHelp" readonly>
                                     <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                                 </div>
                                
                                 <div class="mb-3">
                                     <label  class="form-label fs-5">Photo</label>
-                                    <input type="file" class="form-control form-control-lg"  name="photo" accept="image/*">
+                                    <input type="file" class="form-control form-control-lg"  name="photo" accept="image/*" value="{{info_user.Photo}}">
+                                    <img class="portait" src="{{ info_user.Photo }}" height="10%" />
                                 </div>
                                 
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label fs-5">Title</label>
-                                    <input type="text" class="form-control form-control-lg" id="title" name="title" aria-describedby="emailHelp">
+                                    <input type="text" class="form-control form-control-lg" id="title" name="title" aria-describedby="emailHelp" value="{{info_user.Title}}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="phonenumber" class="form-label fs-5">Profile</label>
-                                    <input type="text" class="form-control form-control-lg" id="Profile" name="profile" placeholder="e.g., I am currently a computer science student searching for an end of studies internship...">
+                                    <input type="text" class="form-control form-control-lg" id="Profile" name="profile" value="{{info_user.Profile}}" placeholder="e.g., I am currently a computer science student searching for an end of studies internship..." >
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label fs-5">Adress</label>
-                                    <input type="text" class="form-control form-control-lg" id="Adress" name="Adress">
+                                    <input type="text" class="form-control form-control-lg" id="Adress" name="Adress" value="{{info_user.Address}}">
                                 </div>
                                 <div class="mb-3">
                                     <label for="phonenumber" class="form-label fs-5">Phone Number</label>
-                                    <input type="text" class="form-control form-control-lg" id="phonenumber" name="phone_number" placeholder="e.g., +21699765345" aria-describedby="+21699765345">
+                                    <input type="text" class="form-control form-control-lg" id="phonenumber" name="phone_number" value="{{info_user.Phone}}" placeholder="e.g., +21699765345" aria-describedby="+21699765345">
                                 </div>
                                 <div class="mb-3">
                                     <label for="phonenumber" class="form-label fs-5">Linkedin profile</label>
-                                    <input type="tel" class="form-control form-control-lg"  name="linkedin_p" placeholder="e.g.,https//:linkedin/122552-HJ" >
+                                    <input type="tel" class="form-control form-control-lg"  name="linkedin_p" placeholder="e.g.,https//:linkedin/122552-HJ" value="{{info_user.Linkedin}}" >
                                 </div>
                                 <div class="mb-3">
                                     <label for="technicalSkills" class="form-label fs-5">Skills</label>
-                                    <input type="text" class="form-control form-control-lg" name="Skills" placeholder="e.g., Programming, Web Development" aria-describedby="Technical Skills">
+                                    <input type="text" class="form-control form-control-lg" name="Skills" value="{{info_user.Skills}}" placeholder="e.g., Programming, Web Development" aria-describedby="Technical Skills">
                                 </div>
                                  <!-- Passion and Interests -->
                                  <div class="mb-3">
                                     <label for="passionInterests" class="form-label fs-5">Passion and Interests</label>
-                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="interests" placeholder="e.g., Photography, Travel" aria-describedby="Passion and Interests">
+                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="interests" value="{{info_user.Interests}}" placeholder="e.g., Photography, Travel" aria-describedby="Passion and Interests">
                                 </div>
 
                                 <!-- Languages -->
                                 <div class="mb-3">
                                     <label for="passionInterests" class="form-label fs-5">Languages</label>
-                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="languages" placeholder="e.g., English, French" aria-describedby="Passion and Interests">
+                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="languages" value="{{info_user.Languages}}" placeholder="e.g., English, French" aria-describedby="Passion and Interests">
                                 </div>
                                 <div class="mb-3">
                                     <label for="degree" class="form-label">Degrees</label>
-                                    <input type="text" class="form-control form-control-lg" name="Education" placeholder="e.g.,University of Canada: Master of Science 2012-2014,University of Nevada: Master of psychology 2011-2013 ">
+                                    <input type="text" class="form-control form-control-lg" name="Education" value="{{info_user.Education}}" placeholder="e.g.,University of Canada: Master of Science 2012-2014,University of Nevada: Master of psychology 2011-2013 ">
                                 </div>
                                 <div class="mb-3">
                                     <label for="certificateName" class="form-label">Certificates</label>
-                                    <input type="text" class="form-control form-control-lg" name="certificates" placeholder="e.g., Certificate in Web Development : IBM : 2012, Certificate of deep learning : Nvidia 2014">
+                                    <input type="text" class="form-control form-control-lg" name="certificates" value="{{info_user.Certificates}}" placeholder="e.g., Certificate in Web Development : IBM : 2012, Certificate of deep learning : Nvidia 2014">
                                 </div>
                                 <div class="mb-3">
                                     <label for="companyName" class="form-label">Professional experience</label>
-                                    <input type="text" class="form-control form-control-lg" name="professional_experience" placeholder="e.g. SAMSUNG : Software Engineer : 2012 - 2013 :Implemented a customer service chatbot...">
+                                    <input type="text" class="form-control form-control-lg" name="professional_experience" value="{{info_user.PE}}" placeholder="e.g. SAMSUNG : Software Engineer : 2012 - 2013 :Implemented a customer service chatbot...">
                                 </div>
                                 <div class="mb-3">
                                     <label for="projectName" class="form-label">Organizations</label>
-                                    <input type="text" class="form-control form-control-lg" name="organizations" placeholder="e.g., Nevada Psychology club : member : Helped organize workshops">
+                                    <input type="text" class="form-control form-control-lg" name="organizations" value="{{info_user.Organizations}}" Organizationsplaceholder="e.g., Nevada Psychology club : member : Helped organize workshops">
                                 </div>
                                <button type="submit" class="btn btn-primary btn-lg" name="update_button" value="Update basic information">Save</button>
                             </form> 
