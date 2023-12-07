@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <meta charset="UTF-8">
+    <title>Weekly Coding Challenge #1: Sign in/up Form</title> -->
+
+    <!-- Link to Bootstrap CSS file -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
+    
+    <!-- Link to your custom CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='/Front/assets/css/style.css') }}">
+	
+   
+    <!-- Link to Font Awesome CSS file -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='myfont/css/all.min.css') }}"> -->
+    
+    <!-- Link to jQuery JS file -->
+    <!-- <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script> -->
+    
+    <!-- Link to your custom JS file -->
+    <script src="{{ url_for('static', filename='Front/assets/js/jvs.js') }}"></script>
+
+</head>
+<!-- <h2>Weekly Coding Challenge #1: Sign in/up Form</h2> -->
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="/register" method="POST" >
+			<h1>Create Account</h1>
+            <input type="text" name="first_name" placeholder="First Name" />
+            <input type="text" name="last_name" placeholder="Last Name" />
+            <input type="email" name="email" placeholder="Email" />
+            <input type="password" name="password" placeholder="Password" />
+			<input type="submit" value="sign up" class="button">
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+        <form action="/login" method="POST" autocomplete="off">
+			<h1>Sign in</h1>
+            <!-- <input type="text" name="first_name" placeholder="First Name" />
+            <input type="text" name="last_name" placeholder="Last Name" /> -->
+            <input type="email" name="email" placeholder="Email" />
+            <input type="password" name="password" placeholder="Password" />
+			<a href="#">Forgot your password?</a>
+			<input type="submit" value="Sign in" class="button">
+			{% if error_message %}
+			<p class="text-danger">{{ error_message }}</p>
+		{% endif %}
+		</form>
+	</div>
+	
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>
