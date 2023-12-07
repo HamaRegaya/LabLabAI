@@ -38,7 +38,9 @@
       <nav class="navbar navbar-light sticky-top" data-navbar-darken-on-scroll="900">
         <div class="container pt-2"><a class="navbar-brand" href="index_front.html"> <img src="../static/Front/assets/img/gallery/logo.png" alt="..." /></a>
           <div class="navbar-nav ms-auto">
-            <button class="btn btn-secondary">Login</button>
+            <!-- <button class="btn btn-secondary">Login</button> -->
+            <button class="btn btn-secondary"><a href="{{ url_for('register') }}" style="text-decoration: none; color: white;">Login</a></button>
+
           </div>
         </div>
       </nav>

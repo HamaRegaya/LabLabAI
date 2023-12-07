@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>DarkPan - Bootstrap 5 Admin Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="../static/Back/assets/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../static/Back/assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../static/Back/assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../static/Back/assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="../static/Back/assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+         <!-- Sidebar Start -->
+         <div class="sidebar pe-4 pb-3">
+            <nav class="navbar bg-secondary navbar-dark">
+                <a href="index_back.html" class="navbar-brand mx-4 mb-3">
+                    <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle" src="../static/Back/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0">{{ session["First_name"] }} {{ session["Last_name"] }}</h6>
+                        <span>Admin</span>
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="index_back.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Profile</a>
+                    
+                
+                    <a href="{{ url_for('form') }}" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Edit profile</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>features</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="signin.html" class="dropdown-item">CV Builder</a>
+                            <a href="signup.html" class="dropdown-item">CV Evaluator</a>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
+                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                </form>
+                <div class="navbar-nav align-items-center ms-auto">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-envelope me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">Message</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="../static/Back/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="../static/Back/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <div class="d-flex align-items-center">
+                                    <img class="rounded-circle" src="../static/Back/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <div class="ms-2">
+                                        <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                        <small>15 minutes ago</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all message</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2"></i>
+                            <span class="d-none d-lg-inline-flex">Notificatin</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Profile updated</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">New user added</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item">
+                                <h6 class="fw-normal mb-0">Password changed</h6>
+                                <small>15 minutes ago</small>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="../static/Back/assets/img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex">{{ session["First_name"] }} {{ session["Last_name"] }}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
+                            <a href="#" class="dropdown-item">My Profile</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                            <a href="#" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Form Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Basic Information</h6>
+                            <form action="/editprofile" method="POST" enctype="multipart/form-data">
+                                
+                                <div class="mb-3">
+                                    <label for="username" class="form-label fs-5">First Name</label>
+                                    <input type="text" class="form-control form-control-lg" id="username" name="first_name" value="{{ session['First_name'] }}" aria-describedby="Full Name" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label fs-5">Last Name</label>
+                                    <input type="text" class="form-control form-control-lg" id="username" name="last_name" value="{{ session['Last_name'] }}" aria-describedby="Full Name" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label fs-5">Email address</label>
+                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" name="email" value="{{ session['email'] }}" aria-describedby="emailHelp">
+                                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                                </div>
+                               
+                                <div class="mb-3">
+                                    <label  class="form-label fs-5">Photo</label>
+                                    <input type="file" class="form-control form-control-lg"  name="photo" accept="image/*">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label fs-5">Title</label>
+                                    <input type="text" class="form-control form-control-lg" id="title" name="title" aria-describedby="emailHelp">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phonenumber" class="form-label fs-5">Profile</label>
+                                    <input type="text" class="form-control form-control-lg" id="Profile" name="profile" placeholder="e.g., I am currently a computer science student searching for an end of studies internship...">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label fs-5">Adress</label>
+                                    <input type="text" class="form-control form-control-lg" id="Adress" name="Adress">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phonenumber" class="form-label fs-5">Phone Number</label>
+                                    <input type="text" class="form-control form-control-lg" id="phonenumber" name="phone_number" placeholder="e.g., +21699765345" aria-describedby="+21699765345">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phonenumber" class="form-label fs-5">Linkedin profile</label>
+                                    <input type="tel" class="form-control form-control-lg"  name="linkedin_p" placeholder="e.g.,https//:linkedin/122552-HJ" >
+                                </div>
+                                <div class="mb-3">
+                                    <label for="technicalSkills" class="form-label fs-5">Skills</label>
+                                    <input type="text" class="form-control form-control-lg" name="Skills" placeholder="e.g., Programming, Web Development" aria-describedby="Technical Skills">
+                                </div>
+                                 <!-- Passion and Interests -->
+                                 <div class="mb-3">
+                                    <label for="passionInterests" class="form-label fs-5">Passion and Interests</label>
+                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="interests" placeholder="e.g., Photography, Travel" aria-describedby="Passion and Interests">
+                                </div>
+
+                                <!-- Languages -->
+                                <div class="mb-3">
+                                    <label for="passionInterests" class="form-label fs-5">Languages</label>
+                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="languages" placeholder="e.g., English, French" aria-describedby="Passion and Interests">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="degree" class="form-label">Degrees</label>
+                                    <input type="text" class="form-control form-control-lg" name="Education" placeholder="e.g.,University of Canada: Master of Science 2012-2014,University of Nevada: Master of psychology 2011-2013 ">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="certificateName" class="form-label">Certificates</label>
+                                    <input type="text" class="form-control form-control-lg" name="certificates" placeholder="e.g., Certificate in Web Development : IBM : 2012, Certificate of deep learning : Nvidia 2014">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="companyName" class="form-label">Professional experience</label>
+                                    <input type="text" class="form-control form-control-lg" name="professional_experience" placeholder="e.g. SAMSUNG : Software Engineer : 2012 - 2013 :Implemented a customer service chatbot...">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="projectName" class="form-label">Organizations</label>
+                                    <input type="text" class="form-control form-control-lg" name="organizations" placeholder="e.g., Nevada Psychology club : member : Helped organize workshops">
+                                </div>
+                               <button type="submit" class="btn btn-primary btn-lg" name="update_button" value="Update basic information">Save</button>
+                            </form> 
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Skills</h6> -->
+                            <!-- <form action="/editprofile" method="POST"> -->
+                                <!-- Technical Skills -->
+                                <!-- <div class="mb-3">
+                                    <label for="technicalSkills" class="form-label fs-5">Skills</label>
+                                    <input type="text" class="form-control form-control-lg" name="Skills" placeholder="e.g., Programming, Web Development" aria-describedby="Technical Skills">
+                                </div> -->
+                    
+                                <!-- Soft Skills -->
+                                <!-- <div class="mb-3">
+                                    <label for="softSkills" class="form-label fs-5">Soft Skills</label>
+                                    <input type="text" class="form-control form-control-lg" id="softSkills" placeholder="e.g., Communication, Teamwork" aria-describedby="Soft Skills">
+                                </div> -->
+                    
+                                <!-- Passion and Interests -->
+                                <!-- <div class="mb-3">
+                                    <label for="passionInterests" class="form-label fs-5">Passion and Interests</label>
+                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="interests" placeholder="e.g., Photography, Travel" aria-describedby="Passion and Interests">
+                                </div> -->
+
+                                <!-- Languages -->
+                                <!-- <div class="mb-3">
+                                    <label for="passionInterests" class="form-label fs-5">Languages</label>
+                                    <input type="text" class="form-control form-control-lg" id="passionInterests" name ="languages" placeholder="e.g., English, French" aria-describedby="Passion and Interests">
+                                </div> -->
+                    
+                                <!-- <button type="submit" name="update_button" class="btn btn-primary btn-lg">Save</button>
+                            </form> -->
+                    
+                            <!-- Display the saved skills -->
+                            <!-- <div id="savedSkills" class="mt-4">
+                                Display saved skills here
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Education</h6>
+                            <form id="educationForm" action="/editprofile" method="POST">
+                                <div class="education-entry mt-4 bg-secondary rounded p-3"> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="school" class="form-label">School</label>
+                                        <input type="text" class="form-control form-control-lg" name="school" placeholder="e.g., University of Canada">
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="degree" class="form-label">Degrees</label>
+                                        <input type="text" class="form-control form-control-lg" name="Education" placeholder="e.g.,University of Canada: Master of Science 2012-2014,University of Nevada: Master of psychology 2011-2013 ">
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="dates" class="form-label">Dates</label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-lg" name="startDate" placeholder="Start Date">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-lg" name="endDate" placeholder="End Date">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                <!-- </div> -->
+                    
+                                <!-- <button type="button" class="btn btn-primary btn-lg3" value="Update education" onclick="saveEducation()">Save</button>
+                            </form> -->
+                    
+                            <!-- <div id="savedEducations" class="mt-4"></div>
+                        </div>
+                    </div> -->
+                    
+                   
+                    
+                    
+                    
+                    <!-- <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Certificates</h6> -->
+                            <!-- <form id="certificateForm" action="/editprofile" method="POST"> -->
+                                <!-- <div class="certificate-entry mt-4 bg-secondary rounded p-3"> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="certificateName" class="form-label">Certificates</label>
+                                        <input type="text" class="form-control form-control-lg" name="certificates" placeholder="e.g., Certificate in Web Development : IBM : 2012, Certificate of deep learning : Nvidia 2014">
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="issuingAuthority" class="form-label">Issuing Authority</label>
+                                        <input type="text" class="form-control form-control-lg" name="issuingAuthority[]" placeholder="e.g., XYZ Institute">
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="dates" class="form-label">Dates</label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-lg" name="startDate[]" placeholder="Start Date">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-lg" name="endDate[]" placeholder="End Date">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                <!-- </div> -->
+                    
+                                <!-- <button type="button" class="btn btn-primary btn-lg3" value="update certificate" onclick="saveCertificate()">Save</button>
+                            </form> -->
+                    
+                            <!-- <div id="savedCertificates" class="mt-4"></div>
+                        </div>
+                    </div> -->
+                    
+                    
+                    
+                    <!-- <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Experience</h6> -->
+                            <!-- <form id="experienceForm" action="/editprofile" method="POST"> -->
+                                <!-- <div class="experience-entry mt-4 bg-secondary rounded p-3"> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="companyName" class="form-label">Professional experience</label>
+                                        <input type="text" class="form-control form-control-lg" name="professional_experience" placeholder="e.g. SAMSUNG : Software Engineer : 2012 - 2013 :Implemented a customer service chatbot...">
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="jobName" class="form-label">Job Name</label>
+                                        <input type="text" class="form-control form-control-lg" name="jobName[]" placeholder="e.g., Software Engineer">
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="dates" class="form-label">Dates</label>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-lg" name="startDate[]" placeholder="Start Date">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-lg" name="endDate[]" placeholder="End Date">
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="mb-3">
+                                        <label for="jobDescription" class="form-label">Job Description</label>
+                                        <textarea class="form-control form-control-lg" name="jobDescription[]" placeholder="Briefly describe your responsibilities..."></textarea>
+                                    </div> -->
+                                <!-- </div> -->
+                    
+                                <!-- <button type="button" class="btn btn-primary btn-lg" onclick="saveExperience()">Save</button>
+                            </form> -->
+                    
+                            <!-- <div id="savedExperiences" class="mt-4"></div>
+                        </div>
+                    </div> -->
+                    
+                    <script>
+                        function saveExperience() {
+                            var entries = document.querySelectorAll('.experience-entry');
+                            var savedExperiencesContainer = document.getElementById('savedExperiences');
+                    
+                            entries.forEach(function(entry) {
+                                var companyNameValue = entry.querySelector('[name="companyName[]"]').value;
+                                var jobNameValue = entry.querySelector('[name="jobName[]"]').value;
+                                var startDateValue = entry.querySelector('[name="startDate[]"]').value;
+                                var endDateValue = entry.querySelector('[name="endDate[]"]').value;
+                                var jobDescriptionValue = entry.querySelector('[name="jobDescription[]"]').value;
+                    
+                                // Create a new container for each experience entry
+                                var experienceContainer = document.createElement('div');
+                                experienceContainer.classList.add('experience-entry', 'bg-dark', 'rounded', 'p-3', 'mb-4', 'mt-4'); // Increased bottom and top margins
+                    
+                                // Display the entered information in the container
+                                experienceContainer.innerHTML = `
+                                    <div class="mt-2">
+                                        <strong>Company Name:</strong> ${companyNameValue}<br>
+                                        <strong>Job Name:</strong> ${jobNameValue}<br>
+                                        <strong>Dates:</strong> ${startDateValue} - ${endDateValue}<br>
+                                        <strong>Job Description:</strong> ${jobDescriptionValue}
+                                    </div>
+                                    <button type="button" class="btn btn-primary ms-auto mt-3" onclick="removeExperience(this)">Delete</button>
+                                `;
+                    
+                                // Append the container to the savedExperiencesContainer
+                                savedExperiencesContainer.appendChild(experienceContainer);
+                            });
+                        }
+                    
+                        function removeExperience(button) {
+                            var entry = button.closest('.experience-entry');
+                            entry.parentNode.removeChild(entry);
+                        }
+                    </script>
+                    
+                    <!-- <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4"> -->
+                            <!-- <h6 class="mb-4">Organizations</h6> -->
+                            <!-- <form id="projectForm" action="/editprofile" method="POST"> -->
+                                <!-- Project Name -->
+                                <!-- <div class="mb-3">
+                                    <label for="projectName" class="form-label">Organizations</label>
+                                    <input type="text" class="form-control form-control-lg" name="organizations" placeholder="e.g., Nevada Psychology club : member : Helped organize workshops">
+                                </div> -->
+                    
+                                <!-- Company Name -->
+                                <!-- <div class="mb-3">
+                                    <label for="companyName" class="form-label">Company Name</label>
+                                    <input type="text" class="form-control form-control-lg" name="companyName[]" placeholder="e.g., XYZ Tech">
+                                </div>
+                     -->
+                                <!-- Dates -->
+                                <!-- <div class="mb-3">
+                                    <label for="projectDates" class="form-label">Dates</label>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control form-control-lg" name="startDate[]" placeholder="Start Date">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control form-control-lg" name="endDate[]" placeholder="End Date">
+                                        </div>
+                                    </div>
+                                </div> -->
+                    
+                                <!-- Project Description -->
+                                <!-- <div class="mb-3">
+                                    <label for="projectDescription" class="form-label">Project Description</label>
+                                    <textarea class="form-control form-control-lg" name="projectDescription[]" placeholder="Briefly describe your project..."></textarea>
+                                </div> -->
+                                <!-- <button type="submit" class="btn btn-primary btn-lg" name="update_button" value="Edit profile">Save</button>
+                            
+                            </form> -->
+                    
+                            <!-- <button type="button" class="btn btn-primary btn-lg" onclick="saveProject()">Save</button> -->
+                            
+                    
+                            <!-- Display the saved projects -->
+                            <!-- <div id="savedProjects" class="mt-4"></div>
+                        </div>
+                    </div> -->
+                    
+                    <script>
+                        function saveProject() {
+                            var entries = document.querySelectorAll('.project-entry');
+                            var savedProjectsContainer = document.getElementById('savedProjects');
+                    
+                            entries.forEach(function(entry) {
+                                var projectNameValue = entry.querySelector('[name="projectName[]"]').value;
+                                var companyNameValue = entry.querySelector('[name="companyName[]"]').value;
+                                var startDateValue = entry.querySelector('[name="startDate[]"]').value;
+                                var endDateValue = entry.querySelector('[name="endDate[]"]').value;
+                                var projectDescriptionValue = entry.querySelector('[name="projectDescription[]"]').value;
+                    
+                                // Create a new container for each project entry
+                                var projectContainer = document.createElement('div');
+                                projectContainer.classList.add('project-entry', 'bg-dark', 'rounded', 'p-3', 'mb-4', 'mt-4'); // Increased bottom and top margins
+                    
+                                // Display the entered information in the container
+                                projectContainer.innerHTML = `
+                                    <div class="mt-2">
+                                        <strong>Project Name:</strong> ${projectNameValue}<br>
+                                        <strong>Company Name:</strong> ${companyNameValue}<br>
+                                        <strong>Dates:</strong> ${startDateValue} - ${endDateValue}<br>
+                                        <strong>Project Description:</strong> ${projectDescriptionValue}
+                                    </div>
+                                    <button type="button" class="btn btn-primary ms-auto mt-3" onclick="removeProject(this)">Delete</button>
+                                `;
+                    
+                                // Append the container to the savedProjectsContainer
+                                savedProjectsContainer.appendChild(projectContainer);
+                            });
+                        }
+                    
+                        function removeProject(button) {
+                            var entry = button.closest('.project-entry');
+                            entry.parentNode.removeChild(entry);
+                        }
+                    </script>
+                     <script>
+                        function saveEducation() {
+                            var entries = document.querySelectorAll('.education-entry');
+                            var savedEducationsContainer = document.getElementById('savedEducations');
+                    
+                            entries.forEach(function(entry) {
+                                var schoolValue = entry.querySelector('[name="school[]"]').value;
+                                var degreeValue = entry.querySelector('[name="degree[]"]').value;
+                                var startDateValue = entry.querySelector('[name="startDate[]"]').value;
+                                var endDateValue = entry.querySelector('[name="endDate[]"]').value;
+                    
+                                // Create a new container for each education entry
+                                var educationContainer = document.createElement('div');
+                                educationContainer.classList.add('education-entry', 'bg-dark', 'rounded', 'p-3', 'mb-4', 'mt-4'); // Increased bottom and top margins
+                    
+                                // Display the entered information in the container
+                                educationContainer.innerHTML = `
+                                    <div class="mt-2">
+                                        <strong>School:</strong> ${schoolValue}<br>
+                                        <strong>Degree:</strong> ${degreeValue}<br>
+                                        <strong>Dates:</strong> ${startDateValue} - ${endDateValue}
+                                    </div>
+                                    <button type="button" class="btn btn-primary ms-auto mt-3" onclick="removeSchool(this)">Delete</button>
+                                `;
+                    
+                                // Append the container to the savedEducationsContainer
+                                savedEducationsContainer.appendChild(educationContainer);
+                            });
+                        }
+                    
+                        function removeSchool(button) {
+                            var entry = button.closest('.education-entry');
+                            entry.parentNode.removeChild(entry);
+                        }
+                    </script>
+                    <script>
+                        function saveCertificate() {
+                            var entries = document.querySelectorAll('.certificate-entry');
+                            var savedCertificatesContainer = document.getElementById('savedCertificates');
+                    
+                            entries.forEach(function(entry) {
+                                var certificateNameValue = entry.querySelector('[name="certificateName[]"]').value;
+                                var issuingAuthorityValue = entry.querySelector('[name="issuingAuthority[]"]').value;
+                                var startDateValue = entry.querySelector('[name="startDate[]"]').value;
+                                var endDateValue = entry.querySelector('[name="endDate[]"]').value;
+                    
+                                // Create a new container for each certificate entry
+                                var certificateContainer = document.createElement('div');
+                                certificateContainer.classList.add('certificate-entry', 'bg-dark', 'rounded', 'p-3', 'mb-4', 'mt-4'); // Increased bottom and top margins
+                    
+                                // Display the entered information in the container
+                                certificateContainer.innerHTML = `
+                                    <div class="mt-2">
+                                        <strong>Certificate Name:</strong> ${certificateNameValue}<br>
+                                        <strong>Issuing Authority:</strong> ${issuingAuthorityValue}<br>
+                                        <strong>Dates:</strong> ${startDateValue} - ${endDateValue}
+                                    </div>
+                                    <button type="button" class="btn btn-primary ms-auto mt-3" onclick="removeCertificate(this)">Delete</button>
+                                `;
+                    
+                                // Append the container to the savedCertificatesContainer
+                                savedCertificatesContainer.appendChild(certificateContainer);
+                            });
+                        }
+                    
+                        function removeCertificate(button) {
+                            var entry = button.closest('.certificate-entry');
+                            entry.parentNode.removeChild(entry);
+                        }
+                    </script>
+                    
+                    
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    
+
+                    
+          
+
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                            <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../static/Back/assets/lib/chart/chart.min.js"></script>
+    <script src="../static/Back/assets/lib/easing/easing.min.js"></script>
+    <script src="../static/Back/assets/lib/waypoints/waypoints.min.js"></script>
+    <script src="../static/Back/assets/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="../static/Back/assets/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="../static/Back/assets/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="../static/Back/assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="../static/Back/assets/js/main.js"></script>
+</body>
+
+</html>
