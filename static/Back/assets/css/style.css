@@ -287,3 +287,69 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+nav button {
+    background: #004cd2;
+    color: #d4d4d4;
+    border: 1px solid #080c2c;
+    border-radius: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+nav button:hover {
+    background: #d4d4d4;
+}
+
+
+main .message-div {
+    display: flex;
+    height: 50px;
+}
+
+#upload-file {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+main form input[type="text"] {
+    border-radius: 10px;
+    border: 1px solid #000000;
+    background: #000000;
+    color: #dad5d5;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    margin-right: 10px;
+    flex: 1;
+}
+
+main form button {
+    width: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: #004cd2;
+    color: #fff;
+    border: none;
+}
+
+.messages {
+    overflow-y: auto;
+    flex: 1;
+}
+
+.message {
+    border-radius: 15px;
+    padding: 15px;
+    background: #000000;
+    margin-bottom: 15px;
+}
+
+.assistant.message {
+    background: #000000;
+}

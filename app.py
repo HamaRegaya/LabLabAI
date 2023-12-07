@@ -2,6 +2,28 @@ from flask import Flask, render_template,request, redirect, url_for, session,fla
 import re
 import sqlite3
 import base64
+from werkzeug.utils import secure_filename
+import tempfile
+import openai
+import uuid
+import os
+import config
+import db
+from flask import Flask, render_template, request, jsonify
+import vertexai
+from vertexai.preview.language_models import ChatModel
+from google.auth.transport.requests import Request
+from google.oauth2.service_account import Credentials
+from google.cloud import aiplatform
+from trulens_eval import TruChain, Feedback, Tru, LiteLLM
+from langchain.chains import LLMChain
+from langchain.llms import VertexAI
+from langchain.prompts import PromptTemplate
+from langchain.prompts.chat import HumanMessagePromptTemplate, ChatPromptTemplate
+from PyPDF2 import PdfReader
+database_file = "database.json"
+database = db.load(database_file)
+settings = config.load("settings.json")
 class InfoUser:
     def __init__(self):
         self.Title = ""
@@ -17,6 +39,37 @@ class InfoUser:
         self.Certificates = ""
         self.Organizations = ""
         self.Photo = ""
+tru = Tru()
+key_path = "primeval-gizmo-406722-d94f4e74be2e.json"
+credentials = Credentials.from_service_account_file(key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
+
+if credentials.expired:
+    credentials.refresh(Request())
+PROJECT_ID = os.environ.get('GCP_PROJECT') #Your Google Cloud Project ID
+LOCATION = os.environ.get('GCP_REGION')   #Your Google Cloud Project Region
+aiplatform.init(project = PROJECT_ID,location=LOCATION, credentials=credentials)
+
+full_prompt = HumanMessagePromptTemplate(
+    prompt=PromptTemplate(
+        template=
+        "Provide a helpful response with relevant background information for the following: {prompt}",
+        input_variables=["prompt"],
+    )
+)
+
+chat_prompt_template = ChatPromptTemplate.from_messages([full_prompt])
+
+llm = VertexAI()
+
+chain = LLMChain(llm=llm, prompt=chat_prompt_template, verbose=True)
+litellm = LiteLLM(model_engine="chat-bison")
+relevance = Feedback(litellm.relevance_with_cot_reasons).on_input_output()
+tru_recorder = TruChain(chain,app_id='Chain_ChatApplication',feedbacks=[relevance])
+
+
+# display(llm_response)
+tru.get_records_and_feedback(app_ids=[])[0] # pass an empty list of app_ids to get all
+tru.run_dashboard() # open a local streamlit app to explore
 # from pdfminer.high_level import extract_pages, extract_text
 # import vertexai
 # from vertexai.preview.language_models import TextGenerationModel
@@ -295,6 +348,7 @@ def login():
             return redirect(url_for("back"))
         else:
             error_message = "Username and Password Mismatch"
+            return render_template('register.html',error_message=error_message)
 
     return render_template("back", error_message=error_message)
 
@@ -367,6 +421,215 @@ def cv_generator():
     info_user = InfoUser()
     info_user=get_info()
     return render_template("cv.html",info_user=info_user)
+
+@app.route("/chat/")
+def index():
+    return render_template("test.html")
+
+@app.route("/new_chat", methods=["POST"])
+def new_chat():
+    chat_id = str(uuid.uuid4())
+
+    thread = openai.beta.threads.create()
+
+    chat = {
+        "id": chat_id,
+        "thread_id": thread.id,
+        "title": "Untitled chat",
+    }
+
+    database["conversations"][chat_id] = chat
+    db.save(database_file, database)
+
+    return render_template(
+        "chat_button.html",
+        chat=chat
+    )
+
+@app.route("/load_chat/<chat_id>")
+def load_chat(chat_id):
+    thread_id = database["conversations"][chat_id]["thread_id"]
+
+    messages = openai.beta.threads.messages.list(
+        thread_id=thread_id,
+        order="desc",
+    )
+
+    message_list = []
+
+    for message in messages.data:
+        message_list.append({
+            "role": message.role,
+            "content": message.content[0].text.value
+        })
+
+    message_list = reversed(message_list)
+
+    return render_template(
+        "messages.html",
+        messages=message_list,
+        chat_id=chat_id
+    )
+
+@app.route("/conversations")
+def conversations():
+    chats = database["conversations"].values()
+    return render_template("conversations.html", conversations=chats)
+
+@app.route("/send_message", methods=["POST"])
+def send_message():
+    chat_id = request.form["chat_id"]
+    file_ids = []
+
+    if "file" in request.files:
+        file = request.files["file"]
+        if file.filename != "":
+            temp_dir = tempfile.mkdtemp()
+
+            filename = secure_filename(file.filename)
+            file_path = os.path.join(temp_dir, filename)
+
+            print(f"Saving to {file_path}")
+
+            file.save(file_path)
+            uploaded_file = openai.files.create(
+                file=openai.file_from_path(file_path),
+                purpose="assistants",
+            )
+
+            file_ids.append(uploaded_file.id)
+
+            os.remove(file_path)
+            os.rmdir(temp_dir)
+
+    message = {
+        "role": "user",
+        "content": request.form["message"]
+    }
+
+    chat = database["conversations"][chat_id]
+
+    openai.beta.threads.messages.create(
+        thread_id=chat["thread_id"],
+        role=message["role"],
+        content=message["content"],
+        file_ids=file_ids,
+    )
+
+    return render_template(
+        "user_message.html",
+        chat_id=chat_id,
+        message=message
+    )
+
+@app.route("/get_response/<chat_id>")
+def get_response(chat_id):
+    chat = database["conversations"][chat_id]
+
+    run = openai.beta.threads.runs.create(
+        thread_id=chat["thread_id"],
+        assistant_id=settings["assistant_id"],
+    )
+
+    while True:
+        run = openai.beta.threads.runs.retrieve(
+            run_id=run.id,
+            thread_id=chat["thread_id"]
+        )
+
+        if run.status not in ["queued", "in_progress", "cancelling"]:
+            break
+
+    messages = openai.beta.threads.messages.list(
+        thread_id=chat["thread_id"],
+        order="desc",
+        limit=1,
+    )
+
+    message = {
+        "role": "assistant",
+        "content": messages.data[0].content[0].text.value
+    }
+
+    return render_template(
+        "assistant_message.html",
+        message=message
+    )
+
+@app.route('/chat2')
+def chat():
+    ###
+    return render_template('chat2.html')
+
+@app.route('/palm2', methods=['GET', 'POST'])
+def vertex_palm_chat():
+    user_input = ""
+    if request.method == 'GET':
+        user_input = request.args.get('user_input')
+
+    else:
+        user_input = request.form['user_input']
+    # chat_model = create_session()
+    with tru_recorder as recording:
+        llm_response = chain(user_input)
+        text_value = llm_response['text']
+
+    # content = response(recording,user_input)
+    return jsonify(content=text_value)
+# Function to check if the file has a valid extension
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
+
+
+
+full_prompt2 = HumanMessagePromptTemplate(
+    prompt=PromptTemplate(
+        template="Provide a helpful response that gives the strengths and weaknesses to improve this resume: {prompt}",
+        input_variables=["prompt"],
+    )
+)
+
+chat_prompt_template2 = ChatPromptTemplate.from_messages([full_prompt2])
+chain2 = LLMChain(llm=llm, prompt=chat_prompt_template2, verbose=True)
+litellm = LiteLLM(model_engine="chat-bison")
+relevance = Feedback(litellm.relevance_with_cot_reasons).on_input_output()
+tru_recorder2 = TruChain(chain2, app_id='Chain_strength_and_weaknesses ', feedbacks=[relevance])
+tru.run_dashboard() # open a local streamlit app to explore
+@app.route('/doc')
+def doc():
+    return render_template('doc.html')
+
+@app.route('/palm2doc', methods=['POST'])
+def vertex_palmdoc():
+    if 'file' not in request.files:
+        return jsonify(error="No file provided")
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return jsonify(error="No selected file")
+
+    if file and allowed_file(file.filename):
+        # Extract text from the PDF using PdfReader
+        reader = PdfReader(file)
+        pdf_text = ""
+        for page_number, page in enumerate(reader.pages):
+            pdf_text += page.extract_text()
+
+        # Process text with the PaLM API
+        with tru_recorder2 as recording:
+            llm_response = chain2(pdf_text)
+            strengths_weaknesses = llm_response['text']
+
+        # Return the strengths and weaknesses as a JSON response
+        return jsonify(strengths_weaknesses=strengths_weaknesses)
+
+    return jsonify(error="Invalid file type")
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

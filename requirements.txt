@@ -4,3 +4,4 @@ google-cloud-aiplatform
 vertexai
 trulens_eval
 langchain
+litellm 
