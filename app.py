@@ -40,7 +40,7 @@ class InfoUser:
         self.Organizations = ""
         self.Photo = ""
 tru = Tru()
-key_path = "./static/Front/assets/lablabai-406919-e0c47d25bf7d.json"
+key_path = "lablabai-406919-e0c47d25bf7d.json"
 credentials = Credentials.from_service_account_file(key_path, scopes=["https://www.googleapis.com/auth/cloud-platform"])
 
 if credentials.expired:
@@ -76,7 +76,7 @@ tru.run_dashboard() # open a local streamlit app to explore
 # from google.auth.transport.requests import Request
 # from google.oauth2.service_account import Credentials
 # from trulens_eval import TruChain, Feedback, Huggingface, Tru ,OpenAI
-# key_path="./static/Front/assets/lablabai-406919-e0c47d25bf7d.json"
+# key_path="lablabai-406919-e0c47d25bf7d.json"
 # credentials=Credentials.from_service_account_file(key_path,scopes=["https://www.googleapis.com/auth/cloud-platform"])
 
 # if credentials.expired:
