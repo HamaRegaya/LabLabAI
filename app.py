@@ -21,6 +21,10 @@ from langchain.llms import VertexAI
 from langchain.prompts import PromptTemplate
 from langchain.prompts.chat import HumanMessagePromptTemplate, ChatPromptTemplate
 from PyPDF2 import PdfReader
+from dotenv import load_dotenv
+import base64
+load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
 database_file = "database.json"
 database = db.load(database_file)
 settings = config.load("settings.json")
@@ -388,7 +392,7 @@ def cv_generator():
 
 @app.route("/chat/")
 def index():
-    return render_template("index.html")
+    return render_template("test.html")
 
 @app.route("/new_chat", methods=["POST"])
 def new_chat():
@@ -545,7 +549,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
 full_prompt2 = HumanMessagePromptTemplate(
     prompt=PromptTemplate(
-        template="Provide a helpful response that gives the strengths and weaknesses to improve this resume: {prompt}",
+        template="Job Description: {job_description} ",
         input_variables=["prompt"],
     )
 )
@@ -611,15 +615,52 @@ def vertex_palmdoc():
 
             # Now strengths and weaknesses should contain the desired text
 
-            print(weaknesses)
-            print(strengths)
+            # print(weaknesses)
+            # print(strengths)
         return render_template('doc.html', strengths=strengths, weaknesses=weaknesses)
 
     return render_template('doc.html', error="Invalid file type")
 
+@app.route('/button')
+def button():
+    return render_template('button.html')
+@app.route('/specific_cv',  methods=['GET', 'POST'])
+def specific_cv():
+    info_user = InfoUser()
+    info_user=get_info()    
+    assistant_response_template = """
+    you are a career coach . i'm applying  for this role:
 
+    Job Description: {job_description}
 
+    below is the experience section for my resume. rephrase my experiences to showcase my relevant skills for this role and organize information in a way that's easy to read. include keywords that are specific to the job description and industry:
 
+    
+    Professional Experience:{professional_experience}
+
+    Please use this format for the output :
+
+    Experience Title - role:
+
+    - [bullet point one for experience]
+    - [bullet point two for experience
+    - [bullet point three for experience]
+    """
+    u_input = request.form['u_input']
+    if request.method == 'POST':
+        user_input = {
+            "job_description": u_input,
+            "professional_experience": info_user.PE
+        }
+        
+        # Construct the assistant's response using the template
+        assistant_prompt = assistant_response_template.format(**user_input)
+        with tru_recorder as recording:
+            llm_response = chain(assistant_prompt)
+            text_value = llm_response['text']
+
+    # content = response(recording,user_input)
+    return render_template('cv.html',info_user=info_user ,message_gpt=text_value)
 
 
 if __name__ == '__main__':

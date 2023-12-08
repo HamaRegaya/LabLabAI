@@ -73,41 +73,17 @@
   <body>
     <div class="chat-container">
       <h1>Vertex AI PaLM API Chat</h1>
-      <form id="chat-form">
+      <form id="chat-form" action="/specific_cv" method="post">
         <input
           type="text"
-          id="user-input"
-          name="user_input"
-          placeholder="Your query..."
+          id="u_input"
+          name="u_input"
+          placeholder="Put the job description to have a new CV."
         />
         <button type="submit" id="submitBtn">Send</button>
       </form>
-      <div id="result"></div>
     </div>
 
-    <script>
-      window.onload = function () {
-        document
-          .getElementById("chat-form")
-          .addEventListener("submit", function (event) {
-            // Prevent the form from submitting and refreshing the page
-            event.preventDefault();
-
-            let userInput = document.getElementById("user-input").value;
-            let url = `/palm2?user_input=${encodeURIComponent(userInput)}`;
-
-            fetch(url)
-              .then((response) => response.json())
-              .then((data) => {
-                let content = data.content;
-                let resultDiv = document.getElementById("result");
-                resultDiv.innerHTML = content;
-              })
-              .catch((error) => {
-                console.error("Error fetching PaLM response:", error);
-              });
-          });
-      };
-    </script>
+    
   </body>
 </html>
