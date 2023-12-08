@@ -42,33 +42,37 @@ Unlike traditional platforms, JOBEASE.AI focuses on creating specific and target
 ## 🔧 Dependencies and Installation
 ----------------------------
  please follow these steps:
-
 1. Clone the repository to your local machine.
-2. create   virtual environnement:
-   
+2. Create a virtual environment:
+
     ```
-py -10 -m venv .venv
+    py -10 -m venv .venv
     ```
 
-3.activate  virtual environnement:
+3. Activate the virtual environment:
 
-     ```
-    .venv\scripts\activate
     ```
+    .venv\Scripts\activate  (for Windows)
+    source .venv/bin/activate  (for macOS/Linux)
+    ```
+
 4. Install the required dependencies by running the following command:
-   ```
-   pip install -r requirements.txt
-   ```
 
-5. Obtain an API key from OpenAI and add it to the `.env` file in the project directory.
-```commandline
-OPENAI_API_KEY=your_secrit_api_key
+    ```
+    pip install -r requirements.txt
+    ```
 
-```
-6. Run the website
-   ```
-   flask run
-   ```
+5. Obtain an API key from OpenAI and add it to the `.env` file in the project directory:
+
+    ```plaintext
+    OPENAI_API_KEY=your_secret_api_key
+    ```
+
+6. Run the website:
+
+    ```
+    flask run
+    ```
 ## 🏆 Hackathon Participation
 
 We're currently participating in the TruEra Challenge: Build LLM Applications with Google Cloud Vertex AI. The hackathon serves as an opportunity to showcase our utilization of cutting-edge technologies in revolutionizing AI-driven career guidance and resume building.
