@@ -64,7 +64,11 @@ llm = VertexAI()
 chain = LLMChain(llm=llm, prompt=chat_prompt_template, verbose=True)
 litellm = LiteLLM(model_engine="chat-bison")
 relevance = Feedback(litellm.relevance_with_cot_reasons).on_input_output()
-tru_recorder = TruChain(chain,app_id='Chain_ChatApplication',feedbacks=[relevance])
+f2=Feedback(litellm.criminality_with_cot_reasons).on_output()
+f3=Feedback(litellm.correctness_with_cot_reasons).on_output()
+f4=Feedback(litellm.sentiment_with_cot_reasons).on_output()
+f5=Feedback(litellm.insensitivity).on_output()
+tru_recorder = TruChain(chain,app_id='Chain_ChatApplication',feedbacks=[relevance,f2,f3,f4,f5])
 
 
 # display(llm_response)
@@ -271,9 +275,12 @@ def editprofile():
                 con.close()
 
                 # Redirect outside of the 'finally' block to ensure the connection is closed
+                if(not info_user.Photo):
+                    info_user.Photo="../static/Back/assets/img/user.jpg"
 
                 return render_template('editprofile.html',info_user=info_user)
-
+    if(not info_user.Photo):
+        info_user.Photo="../static/Back/assets/img/user.jpg"
     return render_template('editprofile.html',info_user=info_user)
 
 @app.route('/login',methods=["GET","POST"])
@@ -349,7 +356,11 @@ def logout():
     return redirect("/")
 @app.route("/back")
 def back():
-    return render_template("index_back.html")
+    info_user = InfoUser()
+    info_user=get_info()
+    if(not info_user.Photo):
+        info_user.Photo="../static/Back/assets/img/user.jpg"
+    return render_template("index_back.html",u=info_user)
 
 @app.route("/form", methods=["POST"])
 def form():
@@ -377,7 +388,7 @@ def cv_generator():
 
 @app.route("/chat/")
 def index():
-    return render_template("test.html")
+    return render_template("index.html")
 
 @app.route("/new_chat", methods=["POST"])
 def new_chat():
@@ -532,22 +543,24 @@ def vertex_palm_chat():
 # Function to check if the file has a valid extension
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
-
-
-
 full_prompt2 = HumanMessagePromptTemplate(
     prompt=PromptTemplate(
         template="Provide a helpful response that gives the strengths and weaknesses to improve this resume: {prompt}",
         input_variables=["prompt"],
     )
 )
-
 chat_prompt_template2 = ChatPromptTemplate.from_messages([full_prompt2])
 chain2 = LLMChain(llm=llm, prompt=chat_prompt_template2, verbose=True)
 litellm = LiteLLM(model_engine="chat-bison")
 relevance = Feedback(litellm.relevance_with_cot_reasons).on_input_output()
-tru_recorder2 = TruChain(chain2, app_id='Chain_strength_and_weaknesses ', feedbacks=[relevance])
+f2=Feedback(litellm.criminality_with_cot_reasons).on_output()
+f3=Feedback(litellm.correctness_with_cot_reasons).on_output()
+f4=Feedback(litellm.sentiment_with_cot_reasons).on_output()
+f5=Feedback(litellm.insensitivity).on_output()
+f6=Feedback(litellm.coherence).on_output()
+tru_recorder2 = TruChain(chain2, app_id='Chain_strength_and_weaknesses ', feedbacks=[relevance,f2,f3,f4,f5,f6])
 tru.run_dashboard() # open a local streamlit app to explore
+
 @app.route('/doc')
 def doc():
     return render_template('doc.html')
@@ -555,12 +568,12 @@ def doc():
 @app.route('/palm2doc', methods=['POST'])
 def vertex_palmdoc():
     if 'file' not in request.files:
-        return jsonify(error="No file provided")
+        return render_template('doc.html', error="No file provided")
 
     file = request.files['file']
 
     if file.filename == '':
-        return jsonify(error="No selected file")
+        return render_template('doc.html', error="No selected file")
 
     if file and allowed_file(file.filename):
         # Extract text from the PDF using PdfReader
@@ -573,11 +586,36 @@ def vertex_palmdoc():
         with tru_recorder2 as recording:
             llm_response = chain2(pdf_text)
             strengths_weaknesses = llm_response['text']
+            # Assuming strengths_weaknesses is a string containing both strengths and weaknesses
+            # and starts with "**Strengths:**" and "**Weaknesses:**"
+            start_strengths = "**Strengths:**"
+            start_weaknesses = "**Weaknesses:**"
 
-        # Return the strengths and weaknesses as a JSON response
-        return jsonify(strengths_weaknesses=strengths_weaknesses)
+            # Find the starting index of strengths and weaknesses
+            index_strengths = strengths_weaknesses.find(start_strengths)
+            index_weaknesses = strengths_weaknesses.find(start_weaknesses)
 
-    return jsonify(error="Invalid file type")
+            # Check if both markers are present
+            if index_strengths != -1 and index_weaknesses != -1:
+                # Extract strengths and weaknesses based on the markers
+                strengths = strengths_weaknesses[index_strengths + len(start_strengths):index_weaknesses].strip()
+                weaknesses = strengths_weaknesses[index_weaknesses + len(start_weaknesses):].strip()
+
+                # Split strengths and weaknesses into lists, filtering out empty items
+                strengths_list = [s.strip() for s in strengths.split('-') if s.strip()]
+                weaknesses_list = [w.strip() for w in weaknesses.split('-') if w.strip()]
+            else:
+                # Handle the case where markers are not found
+                strengths_list = []
+                weaknesses_list = []
+
+            # Now strengths and weaknesses should contain the desired text
+
+            print(weaknesses)
+            print(strengths)
+        return render_template('doc.html', strengths=strengths, weaknesses=weaknesses)
+
+    return render_template('doc.html', error="Invalid file type")
 
 
 

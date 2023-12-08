@@ -9,7 +9,8 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
+        color: #ccc;
+        background-color: #080c2c !important;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -18,7 +19,7 @@
       }
 
       .chat-container {
-        background-color: #ffffff;
+        background-color: #090f3b !important;
         border-radius: 5px;
         padding: 20px;
         width: 80%;
@@ -45,7 +46,7 @@
       }
 
       #submitBtn {
-        background-color: #4caf50;
+        background-color: #004cd2;
         color: white;
         border: none;
         border-radius: 5px;
@@ -55,7 +56,7 @@
       }
 
       #submitBtn:hover {
-        background-color: #45a049;
+        background-color: #0c56d7;
       }
 
       #result {
@@ -70,43 +71,34 @@
   </head>
   <body>
     <div class="chat-container">
-      <h1>Vertex AI PaLM API Chat</h1>
-      <form id="chat-form" enctype="multipart/form-data">
-        <input type="file" id="file-input" name="file" accept=".pdf" />
-        <button type="submit" id="submitBtn">Submit</button>
-    </form>
-      <div id="result"></div>
+       <h1>Vertex AI PaLM API Chat</h1>
+       <form action="/palm2doc" method="post" enctype="multipart/form-data"style="margin-left: 126px;">
+          <input type="file" id="file-input" name="file" accept=".pdf" />
+          <button type="submit" id="submitBtn">Submit</button>
+       </form>
+ 
+       {% if strengths %}
+          <div>
+             <h2>Strengths:</h2>
+             <ul>
+                {% for strength in strengths.split('-') %}
+                   <li>{{ strength.strip() }}</li>
+                {% endfor %}
+             </ul>
+          </div>
+       {% endif %}
+ 
+       {% if weaknesses %}
+          <div>
+             <h2>Weaknesses:</h2>
+             <ul>
+                {% for weakness in weaknesses.split('-') %}
+                   <li>{{ weakness.strip() }}</li>
+                {% endfor %}
+             </ul>
+          </div>
+       {% endif %}
     </div>
-
-    <script>
-     window.onload = function () {
-    document.getElementById("chat-form").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        let fileInput = document.getElementById("file-input").files[0];
-
-        // Create FormData to handle the file input
-        let formData = new FormData();
-        formData.append('file', fileInput);
-
-        let url = "/palm2doc";
-
-        fetch(url, {
-            method: "POST",
-            body: formData,
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            let strengthsWeaknesses = data.strengths_weaknesses;
-            let resultDiv = document.getElementById("result");
-            resultDiv.innerHTML = strengthsWeaknesses;
-        })
-        .catch((error) => {
-            console.error("Error fetching PaLM response:", error);
-        });
-    });
-};
-
-    </script>
-  </body>
+ </body>
+ 
 </html>
