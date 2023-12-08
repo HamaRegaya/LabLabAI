@@ -44,12 +44,14 @@ Unlike traditional platforms, JOBEASE.AI focuses on creating specific and target
  please follow these steps:
 
 1. Clone the repository to your local machine.
-2. create   virtual environnement
+2. create   virtual environnement:
+   
     ```
 py -10 -m venv .venv
     ```
 
-3.activate  virtual environnement
+3.activate  virtual environnement:
+
      ```
     .venv\scripts\activate
     ```
