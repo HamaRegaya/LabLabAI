@@ -3,7 +3,7 @@
 
 # JOBEASE.AI
 Welcome to JOBEASE.AI, an AI-powered platform designed to assist users in crafting tailored resumes, evaluating CVs, and providing career guidance through a chatbot counselor.
-<img width="936" alt="image" src="https://github.com/HamaRegaya/LabLabAI/assets/114831078/c0d8a53e-1b14-4ac6-8aaa-ebe7346745e7">
+<img width="648" alt="image" src="https://github.com/HamaRegaya/LabLabAI/assets/114831078/50165408-14f8-4f82-b165-26ce75041571">
 
 
 ## 🌐 Overview
@@ -14,10 +14,6 @@ JOBEASE.AI is aimed at streamlining the job application process by:
 - Providing career guidance through an AI-powered chatbot counselor.
 
 ## 🚀 Features
--Tailored Resume Creation
--CV Evaluation Tool
--Chatbot Guiding Counselor
--Interview Preparation Tools
 ### 🔍 Job Description to CV
 - Users can input a job description, and the platform generates a tailored CV that aligns with the job requirements.
 
@@ -26,6 +22,11 @@ JOBEASE.AI is aimed at streamlining the job application process by:
 
 ### 🤖 Chatbot Guiding Counselor
 - An AI-powered chatbot assists users in discovering the best career paths based on their profiles and preferences.
+  
+### 🤖 Interview Preparation Tools
+- At JobEase.AI, users can upload PDF documents and engage the chatbot specifically for tailored interview tips and preparation, enhancing their readiness for interviews
+<img width="650" alt="image" src="https://github.com/HamaRegaya/LabLabAI/assets/114831078/d3ef5d3d-3817-409d-a3db-ad222412f713">
+
 
 ## 🌟 Unique Proposition
 
@@ -37,22 +38,34 @@ Unlike traditional platforms, JOBEASE.AI focuses on creating specific and target
 - TruLens for LLMs
 - LangChain
 - openai
+- chat bison
 ## 🔧 Dependencies and Installation
 ----------------------------
-To install the MultiPDF Chat App, please follow these steps:
+ please follow these steps:
 
 1. Clone the repository to your local machine.
-
-2. Install the required dependencies by running the following command:
+2. create and activate  virtual environnement
+    ```
+py -10 -m venv .venv
+    ```
+     ```
+    .venv\scripts\activate
+    ```
+3.
+4. Install the required dependencies by running the following command:
    ```
    pip install -r requirements.txt
    ```
 
-3. Obtain an API key from OpenAI and add it to the `.env` file in the project directory.
+5. Obtain an API key from OpenAI and add it to the `.env` file in the project directory.
 ```commandline
 OPENAI_API_KEY=your_secrit_api_key
 
 ```
+6. Run the website
+   ```
+   flask run
+   ```
 ## 🏆 Hackathon Participation
 
 We're currently participating in the TruEra Challenge: Build LLM Applications with Google Cloud Vertex AI. The hackathon serves as an opportunity to showcase our utilization of cutting-edge technologies in revolutionizing AI-driven career guidance and resume building.
@@ -66,6 +79,6 @@ To explore JOBEASE.AI and its functionalities:
 
 ## 📧 Contact Information
 
-For any inquiries or support, feel free to contact us at jobeaseai@gmail.com
+For any inquiries or support, feel free to contact us at Yasmineatrous@outlook.com
 
 Thank you for exploring JOBEASE.AI!
