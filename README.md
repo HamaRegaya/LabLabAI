@@ -44,14 +44,15 @@ Unlike traditional platforms, JOBEASE.AI focuses on creating specific and target
  please follow these steps:
 
 1. Clone the repository to your local machine.
-2. create and activate  virtual environnement
+2. create   virtual environnement
     ```
 py -10 -m venv .venv
     ```
+
+3.activate  virtual environnement
      ```
     .venv\scripts\activate
     ```
-3.
 4. Install the required dependencies by running the following command:
    ```
    pip install -r requirements.txt
