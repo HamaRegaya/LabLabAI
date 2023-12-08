@@ -3,6 +3,8 @@
 
 # JOBEASE.AI
 Welcome to JOBEASE.AI, an AI-powered platform designed to assist users in crafting tailored resumes, evaluating CVs, and providing career guidance through a chatbot counselor.
+<img width="936" alt="image" src="https://github.com/HamaRegaya/LabLabAI/assets/114831078/c0d8a53e-1b14-4ac6-8aaa-ebe7346745e7">
+
 
 ## 🌐 Overview
 
@@ -12,7 +14,10 @@ JOBEASE.AI is aimed at streamlining the job application process by:
 - Providing career guidance through an AI-powered chatbot counselor.
 
 ## 🚀 Features
-
+-Tailored Resume Creation
+-CV Evaluation Tool
+-Chatbot Guiding Counselor
+-Interview Preparation Tools
 ### 🔍 Job Description to CV
 - Users can input a job description, and the platform generates a tailored CV that aligns with the job requirements.
 
@@ -29,9 +34,26 @@ Unlike traditional platforms, JOBEASE.AI focuses on creating specific and target
 ## 🔧 Technologies Used
 
 - Vertex AI
-- Langchain
 - TruLens for LLMs
+- LangChain
+- openai
+- 
+## 🔧 Dependencies and Installation
+----------------------------
+To install the MultiPDF Chat App, please follow these steps:
 
+1. Clone the repository to your local machine.
+
+2. Install the required dependencies by running the following command:
+   ```
+   pip install -r requirements.txt
+   ```
+
+3. Obtain an API key from OpenAI and add it to the `.env` file in the project directory.
+```commandline
+OPENAI_API_KEY=your_secrit_api_key
+
+```
 ## 🏆 Hackathon Participation
 
 We're currently participating in the TruEra Challenge: Build LLM Applications with Google Cloud Vertex AI. The hackathon serves as an opportunity to showcase our utilization of cutting-edge technologies in revolutionizing AI-driven career guidance and resume building.
