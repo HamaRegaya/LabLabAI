@@ -22,6 +22,7 @@ from langchain.prompts import PromptTemplate
 from langchain.prompts.chat import HumanMessagePromptTemplate, ChatPromptTemplate
 from PyPDF2 import PdfReader
 from dotenv import load_dotenv
+from datetime import datetime
 import base64
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -392,18 +393,21 @@ def cv_generator():
 
 @app.route("/chat/")
 def index():
-    return render_template("test.html")
+    info_user = InfoUser()
+    info_user=get_info()
+    return render_template("test.html",info_user=info_user)
 
 @app.route("/new_chat", methods=["POST"])
 def new_chat():
     chat_id = str(uuid.uuid4())
 
     thread = openai.beta.threads.create()
-
+    current_datetime = datetime.now()
+    formatted_datetime = current_datetime.strftime("%a.%m/%Y at %H:%M")
     chat = {
         "id": chat_id,
         "thread_id": thread.id,
-        "title": "Untitled chat",
+        "title": formatted_datetime,
     }
 
     database["conversations"][chat_id] = chat
@@ -549,7 +553,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in {'pdf'}
 full_prompt2 = HumanMessagePromptTemplate(
     prompt=PromptTemplate(
-        template="Job Description: {job_description} ",
+        template="Provide a helpful response that gives the strengths and weaknesses to improve this resume: {prompt}",
         input_variables=["prompt"],
     )
 )
@@ -615,9 +619,9 @@ def vertex_palmdoc():
 
             # Now strengths and weaknesses should contain the desired text
 
-            # print(weaknesses)
-            # print(strengths)
-        return render_template('doc.html', strengths=strengths, weaknesses=weaknesses)
+                print(strengths_list)
+                print(weaknesses_list)
+        return render_template('doc.html', strengths=strengths_list, weaknesses=weaknesses_list)
 
     return render_template('doc.html', error="Invalid file type")
 
@@ -633,9 +637,9 @@ def specific_cv():
 
     Job Description: {job_description}
 
-    below is the experience section for my resume. rephrase my experiences to showcase my relevant skills for this role and organize information in a way that's easy to read. include keywords that are specific to the job description and industry:
+    below is the experience section for my resume. rephrase my experiences to showcase my relevant skills for this role and organize information in a way that's easy to read. include keywords that are specific to the job description and industry :
 
-    
+    Skills:{skills}
     Professional Experience:{professional_experience}
 
     Please use this format for the output :
@@ -650,7 +654,8 @@ def specific_cv():
     if request.method == 'POST':
         user_input = {
             "job_description": u_input,
-            "professional_experience": info_user.PE
+            "professional_experience": info_user.PE,
+            "skills":info_user.Skills
         }
         
         # Construct the assistant's response using the template
@@ -658,9 +663,42 @@ def specific_cv():
         with tru_recorder as recording:
             llm_response = chain(assistant_prompt)
             text_value = llm_response['text']
+        # Define the markers for job title, role, and skills
+            # Define the markers for job title, role, and skills
+# Define the markers for job title, role, and skills
+        print(text_value)   
+        start_job_title = "**"
+        end_job_title = "**"
+        start_role = "** -"
+        start_skills = "Key Skills:"
 
+        # Find the starting and ending index of job title
+        index_job_title_start = text_value.find(start_job_title)
+        index_job_title_end = text_value.find(end_job_title, index_job_title_start + len(start_job_title))
+
+        # Find the starting index of role
+        index_role = text_value.find(start_role, index_job_title_end)
+
+        # Find the starting index of skills
+        index_skills = text_value.find(start_skills)
+
+        # Extract job title, role, and skills based on the markers
+        job_title = text_value[index_job_title_start + len(start_job_title):index_job_title_end].strip()
+        role_raw = text_value[index_job_title_end + len(end_job_title):index_role].strip()
+        skills_raw = text_value[index_skills + len(start_skills):].strip()
+
+        # Split role into a list of bullet points
+        role_list = [role.strip() for role in role_raw.split('.') if role.strip()]
+
+        # Split skills into a list, filtering out empty items
+        skills_list = [s.strip() for s in skills_raw.split('-') if s.strip()]
+        # print()
+        # # Output the extracted job title, role, and skills
+        # print("Job Title:", job_title)
+        # print("Role:", role_list)
+        # print("Skills:", skills_list)
     # content = response(recording,user_input)
-    return render_template('cv.html',info_user=info_user ,message_gpt=text_value)
+    return render_template('cv.html',info_user=info_user ,message_gpt=text_value,role_list=role_list,job_title=job_title)
 
 
 if __name__ == '__main__':

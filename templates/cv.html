@@ -192,11 +192,20 @@ list-style-type: circle;
         <div class="content">
           <div class="section">
             <h2>Professional <br><span class="text-blue">Experiences</span></h2>
+            <strong>{{job_title}}</strong>
+            {% if role_list %}
+                <div>
+                  <ul>
+                      {% for i in role_list %}
+                        <li>{{ i }}</li>
+                      {% endfor %}
+                  </ul>
+                </div>
+            {% endif %}
             <p>
               <!-- <strong>2015 <i class="fas fa-long-arrow-alt-right"></i> 2021</strong>
               <br>
               Fullstack Developer à temps plein chez <em>Webadev SPRL</em> -->
-              {{message_gpt}}
             </p>
             <ul class="experience-list">
               <!-- <li>Réalisations de sites web, d’e-shops, d’interfaces et d’applications web sous Angular et Bootstrap</li>

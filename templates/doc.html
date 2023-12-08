@@ -81,8 +81,8 @@
           <div>
              <h2>Strengths:</h2>
              <ul>
-                {% for strength in strengths.split('-') %}
-                   <li>{{ strength.strip() }}</li>
+                {% for strength in strengths %}
+                   <li>{{ strength }}</li>
                 {% endfor %}
              </ul>
           </div>
@@ -92,8 +92,8 @@
           <div>
              <h2>Weaknesses:</h2>
              <ul>
-                {% for weakness in weaknesses.split('-') %}
-                   <li>{{ weakness.strip() }}</li>
+                {% for weakness in weaknesses %}
+                   <li>{{ weakness }}</li>
                 {% endfor %}
              </ul>
           </div>
