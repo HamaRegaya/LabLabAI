@@ -37,7 +37,6 @@ Unlike traditional platforms, JOBEASE.AI focuses on creating specific and target
 - TruLens for LLMs
 - LangChain
 - openai
-- 
 ## 🔧 Dependencies and Installation
 ----------------------------
 To install the MultiPDF Chat App, please follow these steps:
